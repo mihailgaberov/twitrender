@@ -262,4 +262,3 @@ cython_debug/
 .idea/modules.xml
 .idea/twitrender.iml
 .idea/vcs.xml
-client/
