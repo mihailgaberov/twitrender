@@ -8,7 +8,7 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
-# Diagnostic reports (https://nodejs.org/api/report.html)
+# Diagnostic reports (https://nodejs.org/ap`i/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # Runtime data
@@ -257,3 +257,9 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
+.idea/.gitignore
+.idea/misc.xml
+.idea/modules.xml
+.idea/twitrender.iml
+.idea/vcs.xml
+client/
