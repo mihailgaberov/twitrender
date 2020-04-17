@@ -2,16 +2,18 @@
   <div class="container">
     <Headline />
     <Results />
+    <Controls />
   </div>
 </template>
 
 <script>
 import Headline from './Headline.vue';
 import Results from './Results.vue';
+import Controls from './Controls.vue';
 
 export default {
   name: 'Twitrender',
-  components: { Results, Headline },
+  components: { Controls, Results, Headline },
 };
 </script>
 
