@@ -1,15 +1,17 @@
 <template>
   <div class="container">
-    <Headline/>
+    <Headline />
+    <Results />
   </div>
 </template>
 
 <script>
 import Headline from './Headline.vue';
+import Results from './Results.vue';
 
 export default {
   name: 'Twitrender',
-  components: { Headline },
+  components: { Results, Headline },
 };
 </script>
 
