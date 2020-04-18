@@ -5,7 +5,13 @@
     <b-form-datepicker v-model="value" :min="min" :max="max" locale="en"></b-form-datepicker>
     <label>To</label>
     <b-form-datepicker v-model="value" :min="min" :max="max" locale="en"></b-form-datepicker>
-    <b-form-input id="search" type="search" placeholder="Search word here..." size="lg"></b-form-input>
+    <div class="search-field">
+      <b-form-input id="search" type="search" placeholder="Search word here..." size="lg" />
+    </div>
+    <div>
+      <b-button class="search-button" variant="dark" size="lg">Search</b-button>
+    </div>
+
 
   </div>
 </template>
@@ -35,5 +41,11 @@ export default {
 </script>
 
 <style scoped>
+  .search-field {
+    margin: 1em 0;
+  }
 
+  .search-button {
+    width: 100%;
+  }
 </style>

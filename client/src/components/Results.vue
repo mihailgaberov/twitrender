@@ -14,7 +14,7 @@ export default {
 <style scoped>
   .alert {
     margin-top: 1em;
-    font-size: 1.4em;
+    font-size: 1.3em;
   }
 
   .french-quote {
