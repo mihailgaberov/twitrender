@@ -1,7 +1,12 @@
 <template>
   <div class="controls">
-    <label>Choose <i>period.</i></label>
+    <div>Choose <i>period.</i></div>
+    <label>From</label>
     <b-form-datepicker v-model="value" :min="min" :max="max" locale="en"></b-form-datepicker>
+    <label>To</label>
+    <b-form-datepicker v-model="value" :min="min" :max="max" locale="en"></b-form-datepicker>
+    <b-form-input id="search" type="search" placeholder="Search word here..." size="lg"></b-form-input>
+
   </div>
 </template>
 
