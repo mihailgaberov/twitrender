@@ -2,9 +2,20 @@
   <div class="controls">
     <div>Choose <i>period.</i></div>
     <label>From</label>
-    <b-form-datepicker v-model="value" :min="min" :max="max" locale="en"></b-form-datepicker>
+    <b-form-datepicker calendar-width="300"
+                       class="datepicker-from"
+                       size="lg"
+                       v-model="value"
+                       :min="min"
+                       :max="max"
+                       locale="en" />
     <label>To</label>
-    <b-form-datepicker v-model="value" :min="min" :max="max" locale="en"></b-form-datepicker>
+    <b-form-datepicker size="lg"
+                       calendar-width="300"
+                       v-model="value"
+                       :min="min"
+                       :max="max"
+                       locale="en" />
     <div class="search-field">
       <b-form-input id="search" type="search" placeholder="Search word here..." size="lg" />
     </div>
