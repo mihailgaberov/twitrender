@@ -16,7 +16,7 @@ import Controls from './Controls.vue';
 export default {
   name: 'Twitrender',
   components: {
-    Controls, Headline, Carousel,
+    Controls, Carousel, Headline,
   },
 };
 </script>
