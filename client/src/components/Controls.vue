@@ -1,6 +1,6 @@
 <template>
   <div class="controls">
-    <div>Choose <i>period.</i></div>
+    <div class="choose-period">Choose <i>period.</i></div>
     <label>From</label>
     <b-form-datepicker calendar-width="300"
                        class="datepicker-from"
@@ -52,6 +52,11 @@ export default {
 </script>
 
 <style scoped>
+  .choose-period {
+    color: #155724;
+    font-weight: bold;
+    font-size: 1.8em;
+  }
   .search-field {
     margin: 1em 0;
   }
