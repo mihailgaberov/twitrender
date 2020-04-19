@@ -53,7 +53,7 @@ export default {
 
 <style scoped>
   .choose-period {
-    color: #155724;
+    color: dimgray;
     font-weight: bold;
     font-size: 1.8em;
   }
