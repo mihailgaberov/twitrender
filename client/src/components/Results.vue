@@ -14,6 +14,8 @@ export default {
 
 <style scoped>
   .results {
+    display: flex;
+    align-items: center;
     min-height: 180px;
   }
 
