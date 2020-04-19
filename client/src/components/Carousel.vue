@@ -13,7 +13,7 @@ export default {
       data: [
         {
           id: 1,
-          searchedWord: 'React',
+          searchedWord: '«React»',
           message: 'Did you know that the most searched word during Christmas 2018 is',
           content(createElement, content) {
             return createElement('span', {
@@ -25,7 +25,7 @@ export default {
         },
         {
           id: 2,
-          searchedWord: 'JavaScript',
+          searchedWord: '«JavaScript»',
           message: 'Did you know that the most searched word for 2019 is',
           content(createElement, content) {
             return createElement('span', {
@@ -37,7 +37,7 @@ export default {
         },
         {
           id: 3,
-          searchedWord: 'TDD',
+          searchedWord: '«TDD»',
           message: 'Did you know that the most searched word during Christmas 2018 is',
           content(createElement, content) {
             return createElement('span', {
@@ -66,10 +66,7 @@ export default {
     padding: 0.5rem 0.75rem;
     font-size: 1.3em;
     align-items: center;
-  }
-
-  .broadcast > .carousel {
-    flex: 1;
+    font-weight: 600;
   }
 
   .broadcast-content {
