@@ -24,7 +24,12 @@ app.add_url_rule('/', 'test', test)
 def search(word):
     response_object = {'status': 'success'}
     if request.method == 'GET':
-        result = db.search(word.strip())
+        min_date = request.args.get('min_date', None)
+        max_date = request.args.get('max_date', None)
+        print(max_date)
+        # No dates selected - search the whole database
+        if min_date ==  None and max_date == None:
+            result = db.search(word.strip())
     return jsonify(result)
 
 

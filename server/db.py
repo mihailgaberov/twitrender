@@ -16,8 +16,8 @@ class DB:
         #client = MongoClient('mongodb://' + DB_USER + ':' + urllib.parse.quote(DB_PASS)  + DB_URL)
         client = MongoClient('mongodb://localhost:27017/')
         self.db = client.twitrender
+        # self.db = client['twitter-bot-db']
         self.db.tweets.create_index([('status', TEXT)])
-
 
     def search(self, word):
         print('[*] Searching for word: ', word)
