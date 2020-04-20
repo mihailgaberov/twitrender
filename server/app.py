@@ -22,13 +22,14 @@ app.add_url_rule('/', 'test', test)
 # Search for a given word
 @app.route('/search/<word>', methods=['GET'])
 def search(word):
-    response_object = {'status': 'success'}
     if request.method == 'GET':
-        min_date = request.args.get('min_date', None)
-        max_date = request.args.get('max_date', None)
-        print(max_date)
+        start_date = request.args.get('start_date', None)
+        end_date = request.args.get('end_date', None)
+        print('>>>>>>>> w', word)
+        print('>>>>>>>> s', start_date)
+        print('>>>>>>>> e', end_date)
         # No dates selected - search the whole database
-        if min_date ==  None and max_date == None:
+        if start_date ==  None and end_date == None:
             result = db.search(word.strip())
     return jsonify(result)
 
