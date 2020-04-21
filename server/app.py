@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from db import DB
+from markupsafe import escape
 
 db = DB()
 
@@ -25,12 +26,7 @@ def search(word):
     if request.method == 'GET':
         start_date = request.args.get('start_date', None)
         end_date = request.args.get('end_date', None)
-        print('>>>>>>>> w', word)
-        print('>>>>>>>> s', start_date)
-        print('>>>>>>>> e', end_date)
-        # No dates selected - search the whole database
-        if start_date ==  None and end_date == None:
-            result = db.search(word.strip())
+        result = db.search(escape(word.strip()), escape(start_date), escape(end_date))
     return jsonify(result)
 
 
