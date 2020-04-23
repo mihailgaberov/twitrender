@@ -14,24 +14,19 @@ class DB:
         DB_USER = os.getenv('DB_USER')
         DB_PASS = os.getenv('DB_PASS')
         DB_URL = os.getenv('DB_URL')
-        #client = MongoClient('mongodb://' + DB_USER + ':' + urllib.parse.quote(DB_PASS)  + DB_URL)
+        # client = MongoClient('mongodb://' + DB_USER + ':' + urllib.parse.quote(DB_PASS)  + DB_URL)
+        # self.db = client['twitter-bot-db']
         client = MongoClient('mongodb://localhost:27017/')
         self.db = client.twitrender
-        # self.db = client['twitter-bot-db']
         self.db.tweets.create_index([('status', TEXT)])
 
     def search_by_start_date_and_word(self, start_date, word):
-        start_date = start_date.split('-')
-        start_date_for_search = datetime(int(start_date[0]), int(start_date[1]), int(start_date[2]))
-
-        print('>>> word: ', word)
-        # using list comprehension
-        start_date_for_search = '-'.join(map(str, start_date))
-        print('>>> start_date_for_search: ', start_date_for_search)
+        # '$gte': datetime(2018, 5, 27, 0, 0, 0, tzinfo=timezone.utc)
+        print('>>> start_date: ', start_date)
         return self.db.tweets.count_documents({
             '$and': [
                 { '$text': { '$search': word } },
-                { 'created_at': { '$gte': start_date_for_search }}
+                { 'created_at': { '$gte': start_date }}
             ]
         })
 
