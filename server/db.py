@@ -20,22 +20,39 @@ class DB:
         # self.db = client['twitter-bot-db']
         self.db.tweets.create_index([('status', TEXT)])
 
+    def search_by_start_date_and_word(self, start_date, word):
+        start_date = start_date.split('-')
+        start_date_for_search = datetime(int(start_date[0]), int(start_date[1]), int(start_date[2]))
+
+        print('>>> word: ', word)
+        # using list comprehension
+        start_date_for_search = '-'.join(map(str, start_date))
+        print('>>> start_date_for_search: ', start_date_for_search)
+        return self.db.tweets.count_documents({
+            '$and': [
+                { '$text': { '$search': word } },
+                { 'created_at': { '$gte': start_date_for_search }}
+            ]
+        })
+
     def search(self, word, start_date, end_date):
         print('[*] Searching for word: ', word)
         print('[*] Searching for selected dates -> from: ', start_date, ' to: ', end_date)
+
         # No dates selected - search the whole database
         if start_date ==  'None' and end_date == 'None':
             return self.db.tweets.count_documents( { '$text': { '$search': word } } )
+
         # Start date provided - search the database from this date to the end
         elif start_date != 'None' and end_date == 'None':
-            start_date = start_date.split('-')
-            start_date_for_search = datetime(int(start_date[0]), int(start_date[1]), int(start_date[2]))
-            return self.db.tweets.count_documents( { '$text': { '$search': word }, 'created_at': { '$gte': start_date_for_search } } )
+            return self.search_by_start_date_and_word(start_date, word)
+
         # End date provided - search the database from the beginning to this date
         elif start_date == 'None' and end_date != 'None':
             end_date = end_date.split('-')
             end_date_for_search = datetime(int(end_date[0]), int(end_date[1]), int(end_date[2]))
             return self.db.tweets.count_documents( { '$text': { '$search': word },  'created_at': { '$lte': end_date_for_search } } )
+
         # Start and end dates provided - search the database between these dates
         elif start_date != 'None' and end_date != 'None':
             start_date = start_date.split('-')
