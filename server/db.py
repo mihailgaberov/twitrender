@@ -26,7 +26,8 @@ class DB:
         date = date.split('-')
         return datetime(int(date[0]), int(date[1]), int(date[2]))
 
-    def search_by_start_date_and_word(self, start_date, word):
+    # Search by given start date (till the end of the database) and a word
+    def search_by_start(self, start_date, word):
         start_date_for_search = self.prepare_date_for_search(start_date)
         aggregated_results = self.db.tweets.aggregate([
             {
@@ -54,7 +55,8 @@ class DB:
         print('[*] Search results for word: \"%s\" and start date: [%s] ==> %d ' % (word, start_date_for_search, result))
         return result
 
-    def search_by_end_date_and_word(self, end_date, word):
+    # Search by given end date (from the beginning of the database) and a word
+    def search_by_end(self, end_date, word):
             end_date_for_search = self.prepare_date_for_search(end_date)
             aggregated_results = self.db.tweets.aggregate([
                 {
@@ -82,7 +84,8 @@ class DB:
             print('[*] Search results for word: \"%s\" and end date: [%s] ==> %d ' % (word, end_date_for_search, result))
             return result
 
-    def search_by_dates_and_word(self, start_date, end_date, word):
+    # Search by given date and end dates and a word
+    def search_by_both(self, start_date, end_date, word):
                 start_date_for_search = self.prepare_date_for_search(start_date)
                 end_date_for_search = self.prepare_date_for_search(end_date)
                 aggregated_results = self.db.tweets.aggregate([
@@ -122,12 +125,12 @@ class DB:
 
         # Start date provided - search the database from this date to the end
         elif start_date != 'None' and end_date == 'None':
-            return self.search_by_start_date_and_word(start_date, word)
+            return self.search_by_start(start_date, word)
 
         # End date provided - search the database from the beginning to this date
         elif start_date == 'None' and end_date != 'None':
-            return self.search_by_end_date_and_word(end_date, word)
+            return self.search_by_end(end_date, word)
 
         # Start and end dates provided - search the database between these dates
         elif start_date != 'None' and end_date != 'None':
-            return self.search_by_dates_and_word(start_date, end_date, word)
+            return self.search_by_both(start_date, end_date, word)

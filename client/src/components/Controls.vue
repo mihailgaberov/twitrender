@@ -7,6 +7,8 @@
                          class="datepicker-from"
                          size="lg"
                          v-model="searchForm.startDate"
+                         today-button
+                         reset-button
                          :min="min"
                          :max="max"
                          locale="en" />
@@ -14,6 +16,8 @@
       <b-form-datepicker size="lg"
                          calendar-width="300"
                          v-model="searchForm.endDate"
+                         today-button
+                         reset-button
                          :min="min"
                          :max="max"
                          locale="en" />
