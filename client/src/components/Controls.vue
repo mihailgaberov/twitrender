@@ -60,9 +60,7 @@ export default {
     search(word = '', startDate = '', endDate = '') {
       if (!word) return;
 
-      // const path = /search/${word}?start_date=${startDate}&end_date=${endDate}
       let path = `http://localhost:5000/search/${word}`;
-
       if (startDate && endDate) {
         path = `http://localhost:5000/search/${word}?start_date=${startDate}&end_date=${endDate}`;
       } else if (startDate && !endDate) {
@@ -74,7 +72,7 @@ export default {
       axios
         .get(path)
         .then((res) => {
-          console.log('>>> res', res);
+          this.$parent.showResults(res);
         })
         .catch((error) => {
           // eslint-disable-next-line

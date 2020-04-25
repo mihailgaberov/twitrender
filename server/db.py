@@ -56,7 +56,7 @@ class DB:
 
         result = len(list(aggregated_results))
         print('[*] Search results for word: \"%s\" and start date: [%s] ==> %d ' % (word, start_date_for_search, result))
-        return result
+        return { 'result': result, 'startDate': start_date_for_search, 'word': word }
 
     # Search by given end date (from the beginning of the database) and a word
     def search_by_end(self, end_date, word):
@@ -85,7 +85,7 @@ class DB:
 
             result = len(list(aggregated_results))
             print('[*] Search results for word: \"%s\" and end date: [%s] ==> %d ' % (word, end_date_for_search, result))
-            return result
+            return { 'result': result, 'endDate': end_date_for_search, 'word': word }
 
     # Search by given date and end dates and a word
     def search_by_both(self, start_date, end_date, word):
@@ -116,7 +116,7 @@ class DB:
 
                 result = len(list(aggregated_results))
                 print('[*] Search results for word: \"%s\" and dates from [%s] to [%s] ==> %d ' % (word, start_date_for_search, end_date_for_search, result))
-                return result
+                return { 'result': result, 'startDate': start_date_for_search, 'endDate': end_date_for_search, 'word': word }
 
     def search(self, word, start_date, end_date):
         print('[*] Searching for word: ', word)

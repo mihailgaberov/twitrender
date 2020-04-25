@@ -1,13 +1,14 @@
 <template>
   <div class="results">
-    <div class="alert alert-success">From <strong>22.10.2017</strong> to <strong>16.06.2018</strong>
-      the word <q class="example-quote french-quote">javascript</q>" has been twitted
-      <strong>777</strong> times.
+    <div class="alert alert-success">From <strong>{{ results.startDate }}</strong> to <strong>{{ results.endDate }}</strong>
+      the word <q class="example-quote french-quote">{{ results.word }}</q>" has been twitted
+      <strong>{{ results.result }}</strong> times.
     </div>
   </div>
 </template>
 <script>
 export default {
+  props: ['results'],
   name: 'Results',
 };
 </script>
