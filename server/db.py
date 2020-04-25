@@ -20,23 +20,18 @@ class DB:
         self.db = client.twitrender
         self.db.tweets.create_index([('status', TEXT)])
 
-    def search_by_start_date_and_word(self, start_date, word):
-        # '$gte': datetime(2018, 5, 27, 0, 0, 0, tzinfo=timezone.utc)
-        print('>>> start_date: ', start_date)
-        #return self.db.tweets.count_documents({
-        #   '$and': [
-        #      { '$text': { '$search': word } },
-        #      { 'created_at': { '$gt': start_date }}
-        #  ]
-        #})
-        start_date = start_date.split('-')
-        start_date_for_search = datetime(int(start_date[0]), int(start_date[1]), int(start_date[2]))
 
-        print('>>> start_date_for_search: ', start_date_for_search)
+    # Prepare dates to be used for searching by using python datetime lib
+    def prepare_date_for_search(self, date):
+        date = date.split('-')
+        return datetime(int(date[0]), int(date[1]), int(date[2]))
+
+    def search_by_start_date_and_word(self, start_date, word):
+        start_date_for_search = self.prepare_date_for_search(start_date)
         aggregated_results = self.db.tweets.aggregate([
             {
                 '$match': {
-                    '$text': { '$search': "javascript" },
+                    '$text': { '$search': word },
                 },
             },
             {
@@ -55,9 +50,67 @@ class DB:
              },
         ])
 
-        print('======================>', len(list(aggregated_results)))
-        results = len(list(aggregated_results))
-        return results
+        result = len(list(aggregated_results))
+        print('[*] Search results for word: \"%s\" and start date: [%s] ==> %d ' % (word, start_date_for_search, result))
+        return result
+
+    def search_by_end_date_and_word(self, end_date, word):
+            end_date_for_search = self.prepare_date_for_search(end_date)
+            aggregated_results = self.db.tweets.aggregate([
+                {
+                    '$match': {
+                        '$text': { '$search': word },
+                    },
+                },
+                {
+                    '$addFields': {
+                        'created_at': {
+                            '$toDate': '$created_at'
+                        },
+                    }
+                },
+                 {
+                    '$match': {
+                        'created_at': {
+                            '$lte': end_date_for_search
+                        },
+                    },
+                 },
+            ])
+
+            result = len(list(aggregated_results))
+            print('[*] Search results for word: \"%s\" and end date: [%s] ==> %d ' % (word, end_date_for_search, result))
+            return result
+
+    def search_by_dates_and_word(self, start_date, end_date, word):
+                start_date_for_search = self.prepare_date_for_search(start_date)
+                end_date_for_search = self.prepare_date_for_search(end_date)
+                aggregated_results = self.db.tweets.aggregate([
+                    {
+                        '$match': {
+                            '$text': { '$search': word },
+                        },
+                    },
+                    {
+                        '$addFields': {
+                            'created_at': {
+                                '$toDate': '$created_at'
+                            },
+                        }
+                    },
+                     {
+                        '$match': {
+                            'created_at': {
+                                '$gte': start_date_for_search,
+                                '$lte': end_date_for_search
+                            },
+                        },
+                     },
+                ])
+
+                result = len(list(aggregated_results))
+                print('[*] Search results for word: \"%s\" and dates from [%s] to [%s] ==> %d ' % (word, start_date_for_search, end_date_for_search, result))
+                return result
 
     def search(self, word, start_date, end_date):
         print('[*] Searching for word: ', word)
@@ -73,14 +126,8 @@ class DB:
 
         # End date provided - search the database from the beginning to this date
         elif start_date == 'None' and end_date != 'None':
-            end_date = end_date.split('-')
-            end_date_for_search = datetime(int(end_date[0]), int(end_date[1]), int(end_date[2]))
-            return self.db.tweets.count_documents( { '$text': { '$search': word },  'created_at': { '$lte': end_date_for_search } } )
+            return self.search_by_end_date_and_word(end_date, word)
 
         # Start and end dates provided - search the database between these dates
         elif start_date != 'None' and end_date != 'None':
-            start_date = start_date.split('-')
-            start_date_for_search = datetime(int(start_date[0]), int(start_date[1]), int(start_date[2]))
-            end_date = end_date.split('-')
-            end_date_for_search = datetime(int(end_date[0]), int(end_date[1]), int(end_date[2]))
-            return self.db.tweets.count_documents( { '$and': [{ 'created_at': { '$gte': start_date_for_search } }, { 'created_at': { '$lte': end_date_for_search } }, { '$text': { '$search': word } } ] } )
+            return self.search_by_dates_and_word(start_date, end_date, word)
