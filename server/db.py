@@ -23,12 +23,41 @@ class DB:
     def search_by_start_date_and_word(self, start_date, word):
         # '$gte': datetime(2018, 5, 27, 0, 0, 0, tzinfo=timezone.utc)
         print('>>> start_date: ', start_date)
-        return self.db.tweets.count_documents({
-            '$and': [
-                { '$text': { '$search': word } },
-                { 'created_at': { '$gte': start_date }}
-            ]
-        })
+        #return self.db.tweets.count_documents({
+        #   '$and': [
+        #      { '$text': { '$search': word } },
+        #      { 'created_at': { '$gt': start_date }}
+        #  ]
+        #})
+        start_date = start_date.split('-')
+        start_date_for_search = datetime(int(start_date[0]), int(start_date[1]), int(start_date[2]))
+
+        print('>>> start_date_for_search: ', start_date_for_search)
+        aggregated_results = self.db.tweets.aggregate([
+            {
+                '$match': {
+                    '$text': { '$search': "javascript" },
+                },
+            },
+            {
+                '$addFields': {
+                    'created_at': {
+                        '$toDate': '$created_at'
+                    },
+                }
+            },
+             {
+                '$match': {
+                    'created_at': {
+                        '$gte': start_date_for_search
+                    },
+                },
+             },
+        ])
+
+        print('======================>', len(list(aggregated_results)))
+        results = len(list(aggregated_results))
+        return results
 
     def search(self, word, start_date, end_date):
         print('[*] Searching for word: ', word)
