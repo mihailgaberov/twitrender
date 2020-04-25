@@ -11,12 +11,15 @@ load_dotenv()
 class DB:
     def __init__(self):
         print('[*] Initializing DB object')
-        DB_USER = os.getenv('DB_USER')
+        # DB_USER = os.getenv('DB_USER')
+        DB_USER_ATLAS = os.getenv('DB_USER_ATLAS')
         DB_PASS = os.getenv('DB_PASS')
-        DB_URL = os.getenv('DB_URL')
+        # DB_URL = os.getenv('DB_URL')
+        DB_URL_ATLAS = os.getenv('DB_URL_ATLAS')
         # client = MongoClient('mongodb://' + DB_USER + ':' + urllib.parse.quote(DB_PASS)  + DB_URL)
+        client = MongoClient('mongodb+srv://' + DB_USER_ATLAS + ':' + urllib.parse.quote(DB_PASS)  + DB_URL_ATLAS)
         # self.db = client['twitter-bot-db']
-        client = MongoClient('mongodb://localhost:27017/')
+        # client = MongoClient('mongodb://localhost:27017/')
         self.db = client.twitrender
         self.db.tweets.create_index([('status', TEXT)])
 
