@@ -25,6 +25,7 @@
         <b-form-input type="search"
                       placeholder="Search word here..."
                       size="lg"
+                      @change="onChange"
                       v-model="searchForm.word" />
       </div>
       <div>
@@ -82,6 +83,11 @@ export default {
     onSubmit(evt) {
       evt.preventDefault();
       this.search(this.searchForm.word, this.searchForm.startDate, this.searchForm.endDate);
+    },
+    onChange() {
+      if (this.searchForm.word === '') {
+        this.$parent.searchResults = '';
+      }
     },
   },
 };
