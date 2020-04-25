@@ -1,6 +1,6 @@
 <template>
   <div class="results">
-    <div class="alert alert-success">From <strong>{{ results.startDate }}</strong> to <strong>{{ results.endDate }}</strong>
+    <div class="alert alert-success">From <strong>{{ results.startDate ? results.startDate : '27.05.2017 00:00:00GMT' }}</strong> to <strong>{{ results.endDate ? results.endDate : new Date().toDateString() }}</strong>
       the word <q class="example-quote french-quote">{{ results.word }}</q>" has been twitted
       <strong>{{ results.result }}</strong> times.
     </div>
