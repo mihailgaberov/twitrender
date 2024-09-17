@@ -10,7 +10,7 @@
   "dependencies": {
     "@chenfengyuan/vue-carousel": "^1.0.3",
     "axios": "^1.7.4",
-    "bootstrap": "^4.3.1",
+    "bootstrap": "^5.0.0",
     "bootstrap-vue": "^2.11.0",
     "core-js": "^3.6.4",
     "vue": "^2.6.11",
